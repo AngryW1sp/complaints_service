@@ -1,0 +1,46 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Env & secrets
+.env
+*.env
+*.sqlite
+*.db
+*.json
+*.log
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+certbot/
+*.pid
+
+# Pytest
+.cache/
+htmlcov/
+.coverage
+
+# Jupyter
+*.ipynb_checkpoints
+
+# MyPy
+.mypy_cache/
+
+# Git
+*.swp
+*.swo
+
+# Ignore authorized keys and secrets
+app/services/authorized_key.json
+
+# Ignore migrations if you use alembic
+migrations/
