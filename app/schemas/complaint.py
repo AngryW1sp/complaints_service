@@ -9,6 +9,7 @@ class ComplaintCreate(BaseModel):
 
 class ComplaintResponse(BaseModel):
     id: int
+    text: str
     status: str
     sentiment: str
     category: str
