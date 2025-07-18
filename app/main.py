@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from app.models.complaint import Complaint
 from app.core.database import SessionLocal
-from app.schemas.complaint import ComplaintCreate, ComplaintResponse
+from app.schemas.complaint import ComplaintCreate, ComplaintResponse, ComplaintUpdate
 from app.services.crud import create_complaint
 from app.core.config import NINJAS_API_KEY, API_LAYER_KEY, YANDEX_IAM_TOKEN, YANDEX_FOLDER_ID
 from app.services.yandexapi import ApisInterface
@@ -82,3 +82,20 @@ def get_last_hour_complaints(db: Session = Depends(get_db)):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Ошибка при получении жалоб"
         )
+
+
+@app.patch("/complaints/{complaint_id}")
+def update_complaint(complaint_id: int,
+                     update_data: ComplaintUpdate, db: Session = Depends(get_db)):
+    complaint = db.query(Complaint).filter(
+        Complaint.id == complaint_id).first()
+    if not complaint:
+        raise HTTPException(status_code=404, detail="Жалоба не найдена")
+
+    # Применяем только переданные поля
+    for key, value in update_data.model_dump(exclude_unset=True).items():
+        setattr(complaint, key, value)
+
+    db.commit()
+    db.refresh(complaint)
+    return complaint

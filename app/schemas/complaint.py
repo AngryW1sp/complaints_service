@@ -18,3 +18,7 @@ class ComplaintResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class ComplaintUpdate(BaseModel):
+    status: Optional[str] = None
