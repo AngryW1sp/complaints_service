@@ -52,3 +52,58 @@ APILAYER_URL=https://api.apilayer.com/spamchecker?threshold={threshold}
 - `YANDEX_API_URL` — URL для запроса к YandexGPT.
 - `NINJAS_API_URL` — URL для анализа сентимента.
 - `APILAYER_URL` — URL для проверки текста на спам.
+
+## Примеры запросов
+
+### Создать жалобу
+
+**curl:**
+```sh
+curl -X POST "http://localhost:8000/complaints/" ^
+     -H "Content-Type: application/json" ^
+     -d "{\"text\": \"У меня не работает оплата\"}"
+```
+
+**Postman:**
+- Метод: POST
+- URL: http://localhost:8000/complaints/
+- Body: raw, JSON
+```json
+{
+  "text": "У меня не работает оплата"
+}
+```
+
+---
+
+### Получить жалобы за последний час
+
+**curl:**
+```sh
+curl -X GET "http://localhost:8000/complaints/"
+```
+
+**Postman:**
+- Метод: GET
+- URL: http://localhost:8000/complaints/
+
+---
+
+### Обновить статус жалобы
+
+**curl:**
+```sh
+curl -X PATCH "http://localhost:8000/complaints/1" ^
+     -H "Content-Type: application/json" ^
+     -d "{\"status\": \"closed\"}"
+```
+
+**Postman:**
+- Метод: PATCH
+- URL: http://localhost:8000/complaints/1
+- Body: raw, JSON
+```json
+{
+  "status": "closed"
+}
+```
